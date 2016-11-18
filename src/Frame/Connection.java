@@ -5,6 +5,7 @@
  */
 package Frame;
 
+import Bean.PersonneBean;
 import Persistence.UserBdd;
 import domaine.Personne;
 import java.awt.Color;
@@ -50,10 +51,10 @@ public class Connection extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Connect")) {
             Pseudo = TFPseudo.getText();
             try {
-                Personne personne = UserBdd.connectUser(Pseudo);
+                Personne personne = PersonneBean.getInstance().getPersonneInfo(Pseudo);
                 if (personne != null) {
                     MyFrame.getInstance().getFrame().dispose();
-                    MyFrame.getInstance().setFrame(new JFrame("TP4 Infos"));
+                    MyFrame.getInstance().setFrame(new JFrame("TP4 Infos"));                    
                     MyFrame.getInstance().changeFrame(new InfoDisplay());
                 } else {
                     MyFrame.getInstance().changeFrame(new WrongLogin());

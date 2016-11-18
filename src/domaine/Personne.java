@@ -17,21 +17,35 @@ public class Personne {
     private String nom;
     private String prenom;
     private String evaluation;
+    private Personne pere = null;
     private ArrayList<Personne> fils = new ArrayList();
 
+    public Personne()
+    {
+        
+    }
+    
     public Personne(int id, String nom, String prenom, String evaluation) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.evaluation = evaluation;
     }
-
+    
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Personne getPere() {
+        return pere;
+    }
+
+    public void setPere(Personne pere) {
+        this.pere = pere;
     }
 
     public String getNom() {

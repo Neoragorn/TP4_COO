@@ -5,7 +5,8 @@
  */
 package Frame;
 
-import Persistence.UserBdd;
+import Bean.PersonneBean;
+import domaine.Personne;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ public class InfoDisplay extends JPanel implements ActionListener {
 
     JButton validation;
     JButton annuler;
+    Personne personne;
 
     private JLabel vous;
     private JLabel votrePere;
@@ -32,9 +34,15 @@ public class InfoDisplay extends JPanel implements ActionListener {
         setLayout(null);
         setPreferredSize(new Dimension(800, 400));
 
-        vous = new JLabel("vous : ");
-        votrePere = new JLabel("votre Pere : ");
-        votreEval = new JLabel("votre Evaluation : ");
+        this.personne = PersonneBean.getInstance().getPersonne();
+
+        vous = new JLabel("vous : " + personne.getNom() + " " + personne.getPrenom());
+        if (personne.getPere() == null) {
+            votrePere = new JLabel("votre Pere : Aucun");
+        } else {
+            votrePere = new JLabel("votre Pere : ");
+        }
+        votreEval = new JLabel("votre Evaluation : " + personne.getEvaluation());
         vosFils = new JLabel("vos Fils : ");
         evalDe = new JLabel("evaluation de : ");
 
