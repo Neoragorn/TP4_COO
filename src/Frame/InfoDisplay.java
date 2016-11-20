@@ -10,19 +10,32 @@ import domaine.Personne;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author sofian
  */
-public class InfoDisplay extends JPanel implements ActionListener {
+public class InfoDisplay extends JPanel implements ActionListener, ListSelectionListener {
 
     JButton validation;
     JButton annuler;
     Personne personne;
+
+    private DefaultListModel listFils;
+    private JList fils;
+
+    private DefaultListModel listEvalFils;
+    private JList evalFils;
 
     private JLabel vous;
     private JLabel votrePere;
@@ -31,6 +44,7 @@ public class InfoDisplay extends JPanel implements ActionListener {
     private JLabel evalDe;
 
     public InfoDisplay() {
+        MyFrame.getInstance().getFrame().repaint();
         setLayout(null);
         setPreferredSize(new Dimension(800, 400));
 
@@ -64,6 +78,34 @@ public class InfoDisplay extends JPanel implements ActionListener {
         validation = new JButton("Valider");
         annuler = new JButton("Annuler");
 
+        listFils = new DefaultListModel();
+        listEvalFils = new DefaultListModel();
+
+        ArrayList<Personne> personneList = PersonneBean.getInstance().getPersonne().getFils();
+        for (Personne personne : personneList) {
+            Personne p = PersonneBean.getInstance().getPersonneInfo(personne.getId());
+            listFils.addElement(p.getNom() + " " + p.getPrenom());
+            listEvalFils.addElement(p.getNom() + " " + p.getPrenom() + " : " + p.getEvaluation());
+        }
+
+        fils = new JList(listFils);
+        fils.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        fils.setSelectedIndex(0);
+        fils.addListSelectionListener(this);
+        fils.setVisibleRowCount(5);
+
+        evalFils = new JList(listEvalFils);
+        evalFils.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        evalFils.setSelectedIndex(0);
+        evalFils.addListSelectionListener(this);
+        evalFils.setVisibleRowCount(5);
+
+        JScrollPane scrollFils = new JScrollPane(fils);
+        scrollFils.setBounds(40, 150, 250, 200);
+
+        JScrollPane scrollEvalFils = new JScrollPane(evalFils);
+        scrollEvalFils.setBounds(500, 150, 250, 200);
+
         JPanel p1 = new JPanel();
         p1.setLayout(null);
         p1.setOpaque(false);
@@ -72,6 +114,8 @@ public class InfoDisplay extends JPanel implements ActionListener {
         validation.setBounds(500, 350, 100, 20);
         validation.addActionListener(this);
 
+        p1.add(scrollFils);
+        p1.add(scrollEvalFils);
         p1.add(vous);
         p1.add(votrePere);
         p1.add(votreEval);
@@ -84,10 +128,13 @@ public class InfoDisplay extends JPanel implements ActionListener {
         add(p1);
     }
 
+    public void valueChanged(ListSelectionEvent e) {
+
+    }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Annuler")) {
             MyFrame.getInstance().changeFrame(new Connection());
-            MyFrame.getInstance().getFrame().repaint();
         }
     }
 }

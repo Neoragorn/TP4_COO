@@ -20,18 +20,31 @@ public class Personne {
     private Personne pere = null;
     private ArrayList<Personne> fils = new ArrayList();
 
-    public Personne()
-    {
-        
+    public Personne() {
+
     }
-    
+
+    public Personne(int id) {
+        this.id = id;
+    }
+
     public Personne(int id, String nom, String prenom, String evaluation) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.evaluation = evaluation;
     }
+
+    public ArrayList<Personne> getFils() {
+        return fils;
+    }
+
+    public void setFils(ArrayList<Personne> fils) {
+        this.fils = fils;
+    }
     
+    
+
     public int getId() {
         return id;
     }
@@ -70,6 +83,6 @@ public class Personne {
 
     public void setEvaluation(String evaluation) {
         this.evaluation = evaluation;
-    }    
-    
+    }
+
 }

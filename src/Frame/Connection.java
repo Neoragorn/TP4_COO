@@ -6,7 +6,6 @@
 package Frame;
 
 import Bean.PersonneBean;
-import Persistence.UserBdd;
 import domaine.Personne;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,7 +21,7 @@ public class Connection extends JPanel implements ActionListener {
     static JTextField TFPseudo;
     JButton boutonConnection;
 
-    static String Pseudo;
+    static String id;
 
     public Connection() {
         setLayout(null);
@@ -44,14 +43,18 @@ public class Connection extends JPanel implements ActionListener {
         p1.add(TFPseudo);
         p1.setBounds(0, 0, 500, 300);
         add(p1);
-
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Connect")) {
-            Pseudo = TFPseudo.getText();
+            id = TFPseudo.getText();
             try {
-                Personne personne = PersonneBean.getInstance().getPersonneInfo(Pseudo);
+                Personne personne = null;
+                if (PersonneBean.getInstance().getPersonne() == null)
+                {
+                    personne = PersonneBean.getInstance().getPersonneInfo(Integer.parseInt(id));
+                    PersonneBean.getInstance().setFils(personne);
+                }
                 if (personne != null) {
                     MyFrame.getInstance().getFrame().dispose();
                     MyFrame.getInstance().setFrame(new JFrame("TP4 Infos"));                    

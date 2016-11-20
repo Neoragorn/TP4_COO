@@ -1,7 +1,8 @@
 package Bean;
 
-import Persistence.UserBdd;
+import Persistence.PersonneBdd;
 import domaine.Personne;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -33,20 +34,25 @@ public class PersonneBean {
         return personne;
     }
 
+    public void setFils(Personne personne) {
+        try {
+            ArrayList<Personne> p = PersonneBdd.getIdPersonnelByPersonne(personne);
+            this.personne.setFils(p);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public void setPersonne(Personne personne) {
         this.personne = personne;
     }
-    
-    public Personne getPersonneInfo(String id)
-    {
-        try
-        {
-            Personne personne = UserBdd.connectUser(id);
+
+    public Personne getPersonneInfo(int id) {
+        try {
+            Personne personne = PersonneBdd.connectPersonne(id);
             this.personne = personne;
             return personne;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }

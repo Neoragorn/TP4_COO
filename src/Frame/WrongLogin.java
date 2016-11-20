@@ -5,8 +5,10 @@
  */
 package Frame;
 
-import static Frame.Connection.Pseudo;
-import Persistence.UserBdd;
+
+import Bean.PersonneBean;
+import static Frame.Connection.id;
+import Persistence.PersonneBdd;
 import domaine.Personne;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -28,7 +29,7 @@ public class WrongLogin extends JPanel implements ActionListener {
     static JTextField TFPseudo;
     JButton boutonConnection;
 
-    static String Pseudo;
+    static String id;
 
     private JLabel wrongMessage;
 
@@ -63,10 +64,11 @@ public class WrongLogin extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Connect")) {
-            Pseudo = TFPseudo.getText();
+            id = TFPseudo.getText();
             try {
-                Personne personne = UserBdd.connectUser(Pseudo);
+                Personne personne = PersonneBdd.connectPersonne(Integer.parseInt(id));
                 if (personne != null) {
+                    PersonneBean.getInstance().setFils(personne);
                     MyFrame.getInstance().getFrame().dispose();
                     MyFrame.getInstance().setFrame(new JFrame("TP4 Infos"));
                     MyFrame.getInstance().changeFrame(new InfoDisplay());
