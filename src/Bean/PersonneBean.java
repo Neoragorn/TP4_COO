@@ -34,15 +34,6 @@ public class PersonneBean {
         return personne;
     }
 
-    public void setFils(Personne personne) {
-        try {
-            ArrayList<Personne> p = PersonneBdd.getIdPersonnelByPersonne(personne);
-            this.personne.setFils(p);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
     public void setPersonne(Personne personne) {
         this.personne = personne;
     }

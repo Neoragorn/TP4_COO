@@ -28,19 +28,25 @@ public class PersonneBdd {
             pss.setInt(1, id);
             ResultSet rs = pss.executeQuery();
             rs.next();
-            Personne personne = new Personne(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));            
+            Personne personne = new Personne(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+            //creer une PersonneFactory avec le bon id
+            //cree le virtualproxy (a partir du virtualproxybuilder generique et du personfactory)
+            VirtualUserProxy virtual = new VirtualUserProxy(personne.getId());
+            virtual.fillPersonneList(id);
+            personne.setVirtualFils(virtual.getInst());
+            personne.setPere(virtual.addPere(id));
             return personne;
         } catch (Exception e) {
             return null;
         }
     }
 
-    public static ArrayList<Personne> getIdPersonnelByPersonne(Personne personne) {
+    public static ArrayList<Personne> getPersonnelByPersonne(int id) {
         ArrayList<Personne> listp = new ArrayList();
-        String req = "SELECT idPersonne FROM Personnel WHERE idPere = ?";
+        String req = "SELECT p.idPersonne, nom, prenom, evaluation FROM Personnel pe JOIN Personne p ON pe.idPersonne = p.idPersonne WHERE idPere = ?;";
         try {
             PreparedStatement pss = conn.prepareStatement(req);
-            pss.setInt(1, personne.getId());
+            pss.setInt(1, id);
             ResultSet rs = pss.executeQuery();
             while (rs.next()) {
                 Personne p = new Personne(rs.getInt(1));
@@ -51,4 +57,19 @@ public class PersonneBdd {
             return null;
         }
     }
+    
+     public static Personne setPere(int id){
+        String req = "SELECT p.idPersonne, nom, prenom, evaluation FROM Personne p JOIN Personnel pe ON pe.idPere = p.idPersonne WHERE pe.idPersonne = ?;";
+        try {
+            PreparedStatement pss = conn.prepareStatement(req);
+            pss.setInt(1, id);
+            ResultSet rs = pss.executeQuery();
+            rs.next();
+            Personne p = new Personne(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+            return p;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+   
 }

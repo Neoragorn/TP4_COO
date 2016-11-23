@@ -54,7 +54,7 @@ public class InfoDisplay extends JPanel implements ActionListener, ListSelection
         if (personne.getPere() == null) {
             votrePere = new JLabel("votre Pere : Aucun");
         } else {
-            votrePere = new JLabel("votre Pere : ");
+            votrePere = new JLabel("votre Pere : " + this.personne.getPere().getNom() + " " + this.personne.getPere().getPrenom());
         }
         votreEval = new JLabel("votre Evaluation : " + personne.getEvaluation());
         vosFils = new JLabel("vos Fils : ");
@@ -81,7 +81,7 @@ public class InfoDisplay extends JPanel implements ActionListener, ListSelection
         listFils = new DefaultListModel();
         listEvalFils = new DefaultListModel();
 
-        ArrayList<Personne> personneList = PersonneBean.getInstance().getPersonne().getFils();
+        ArrayList<Personne> personneList = this.personne.getFils();
         for (Personne personne : personneList) {
             Personne p = PersonneBean.getInstance().getPersonneInfo(personne.getId());
             listFils.addElement(p.getNom() + " " + p.getPrenom());

@@ -68,7 +68,7 @@ public class WrongLogin extends JPanel implements ActionListener {
             try {
                 Personne personne = PersonneBdd.connectPersonne(Integer.parseInt(id));
                 if (personne != null) {
-                    PersonneBean.getInstance().setFils(personne);
+               //     PersonneBean.getInstance().setFils(personne);
                     MyFrame.getInstance().getFrame().dispose();
                     MyFrame.getInstance().setFrame(new JFrame("TP4 Infos"));
                     MyFrame.getInstance().changeFrame(new InfoDisplay());

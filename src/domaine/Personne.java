@@ -5,6 +5,7 @@
  */
 package domaine;
 
+import Persistence.VirtualUserProxy;
 import java.util.ArrayList;
 
 /**
@@ -43,7 +44,9 @@ public class Personne {
         this.fils = fils;
     }
     
-    
+      public void setVirtualFils(ArrayList<Personne> virtual) {
+        this.fils = virtual;
+    }
 
     public int getId() {
         return id;

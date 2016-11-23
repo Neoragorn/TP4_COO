@@ -50,14 +50,13 @@ public class Connection extends JPanel implements ActionListener {
             id = TFPseudo.getText();
             try {
                 Personne personne = null;
-                if (PersonneBean.getInstance().getPersonne() == null)
-                {
+                if (PersonneBean.getInstance().getPersonne() == null) {
                     personne = PersonneBean.getInstance().getPersonneInfo(Integer.parseInt(id));
-                    PersonneBean.getInstance().setFils(personne);
                 }
                 if (personne != null) {
+                    PersonneBean.getInstance().setPersonne(personne);
                     MyFrame.getInstance().getFrame().dispose();
-                    MyFrame.getInstance().setFrame(new JFrame("TP4 Infos"));                    
+                    MyFrame.getInstance().setFrame(new JFrame("TP4 Infos"));
                     MyFrame.getInstance().changeFrame(new InfoDisplay());
                 } else {
                     MyFrame.getInstance().changeFrame(new WrongLogin());

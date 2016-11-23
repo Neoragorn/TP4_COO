@@ -6,6 +6,8 @@
 package Persistence;
 
 import domaine.Personne;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +15,36 @@ import java.util.List;
  *
  * @author sofian
  */
-public class VirtualUserProxy {
+public class VirtualUserProxy extends ArrayList<Personne> {
 
-    List<Personne> inst = new ArrayList<Personne>();;
+    Personne pere = null;
+    ArrayList<Personne> inst = null;
 
-    public VirtualUserProxy() {
+    public VirtualUserProxy(int id) {
 
     }
 
-    public ArrayList<Personne> idOnlyRecover(int id) {
-        ArrayList<Personne> listp = new ArrayList();
-                return listp;
+    public ArrayList<Personne> getInst() {
+        return inst;
+    }
+
+    public void setInst(ArrayList<Personne> inst) {
+        this.inst = inst;
+    }
+
+    public ArrayList<Personne> fillPersonneList(int id) {
+        if (inst == null) {
+            inst = PersonneBdd.getPersonnelByPersonne(id);
+        }
+        // garnir listp a partir de id et du datamapper
+        return inst;
+    }
+
+    public Personne addPere(int id) {
+        System.out.println("test deux");
+        if (pere == null) {
+            pere = PersonneBdd.setPere(id);
+        }
+        return pere;
     }
 }
