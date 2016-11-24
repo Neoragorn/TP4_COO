@@ -60,10 +60,12 @@ public class MyFrame extends JPanel {
     }
 
     public void startPoint(JPanel jp) {
-        frame.getContentPane().add(jp, BorderLayout.SOUTH);
+        frame.setContentPane(jp);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        frame.repaint();
+        frame.revalidate();
         this.actualPanel = jp;
     }
 
@@ -71,10 +73,12 @@ public class MyFrame extends JPanel {
         if (actualPanel != null) {
             actualPanel.removeAll();
         }
-        frame.getContentPane().add(jp, BorderLayout.SOUTH);
+        frame.setContentPane(jp);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        frame.repaint();
+        frame.revalidate();
         this.actualPanel = jp;
     }
 

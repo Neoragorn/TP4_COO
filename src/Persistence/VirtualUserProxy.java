@@ -41,7 +41,6 @@ public class VirtualUserProxy extends ArrayList<Personne> {
     }
 
     public Personne addPere(int id) {
-        System.out.println("test deux");
         if (pere == null) {
             pere = PersonneBdd.setPere(id);
         }

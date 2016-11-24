@@ -54,7 +54,6 @@ public class Connection extends JPanel implements ActionListener {
                     personne = PersonneBean.getInstance().getPersonneInfo(Integer.parseInt(id));
                 }
                 if (personne != null) {
-                    PersonneBean.getInstance().setPersonne(personne);
                     MyFrame.getInstance().getFrame().dispose();
                     MyFrame.getInstance().setFrame(new JFrame("TP4 Infos"));
                     MyFrame.getInstance().changeFrame(new InfoDisplay());

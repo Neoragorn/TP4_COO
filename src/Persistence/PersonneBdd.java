@@ -49,7 +49,7 @@ public class PersonneBdd {
             pss.setInt(1, id);
             ResultSet rs = pss.executeQuery();
             while (rs.next()) {
-                Personne p = new Personne(rs.getInt(1));
+                Personne p = new Personne(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
                 listp.add(p);
             }
             return listp;
@@ -57,8 +57,20 @@ public class PersonneBdd {
             return null;
         }
     }
-    
-     public static Personne setPere(int id){
+
+    public static void updateEval(String eval, int id) {
+        String req = "UPDATE Personne SET evaluation = ? WHERE idPersonne = ?";
+        try {
+            PreparedStatement pss = conn.prepareStatement(req);
+            pss.setString(1, eval);
+            pss.setInt(2, id);
+            pss.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public static Personne setPere(int id) {
         String req = "SELECT p.idPersonne, nom, prenom, evaluation FROM Personne p JOIN Personnel pe ON pe.idPere = p.idPersonne WHERE pe.idPersonne = ?;";
         try {
             PreparedStatement pss = conn.prepareStatement(req);
@@ -71,5 +83,5 @@ public class PersonneBdd {
             return null;
         }
     }
-   
+
 }

@@ -75,15 +75,15 @@ public class InfoDisplay extends JPanel implements ActionListener, ListSelection
         evalDe.setOpaque(true);
         evalDe.setBounds(300, 140, 300, 20);
 
-        validation = new JButton("Valider");
+        validation = new JButton("Changer Evaluation");
         annuler = new JButton("Annuler");
 
         listFils = new DefaultListModel();
         listEvalFils = new DefaultListModel();
 
         ArrayList<Personne> personneList = this.personne.getFils();
-        for (Personne personne : personneList) {
-            Personne p = PersonneBean.getInstance().getPersonneInfo(personne.getId());
+        for (Personne p : personneList) {
+//            Personne p = PersonneBean.getInstance().getPersonneInfo(personne.getId());
             listFils.addElement(p.getNom() + " " + p.getPrenom());
             listEvalFils.addElement(p.getNom() + " " + p.getPrenom() + " : " + p.getEvaluation());
         }
@@ -111,7 +111,7 @@ public class InfoDisplay extends JPanel implements ActionListener, ListSelection
         p1.setOpaque(false);
         annuler.setBounds(600, 50, 100, 20);
         annuler.addActionListener(this);
-        validation.setBounds(500, 350, 100, 20);
+        validation.setBounds(500, 350, 200, 20);
         validation.addActionListener(this);
 
         p1.add(scrollFils);
@@ -135,6 +135,9 @@ public class InfoDisplay extends JPanel implements ActionListener, ListSelection
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Annuler")) {
             MyFrame.getInstance().changeFrame(new Connection());
+        }
+        if (e.getActionCommand().equals("Changer Evaluation")) {
+            MyFrame.getInstance().changeFrame(new ChangeEval(evalFils.getSelectedValue()));
         }
     }
 }

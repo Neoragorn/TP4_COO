@@ -48,4 +48,17 @@ public class PersonneBean {
             return null;
         }
     }
+
+    public void changeEval(String eval, String ancientEval) {
+        try {
+            for (Personne fils : this.personne.getFils()) {
+                if (fils.getEvaluation().equals(ancientEval)) {
+                    PersonneBdd.updateEval(eval, fils.getId());
+                }
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

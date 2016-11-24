@@ -41,7 +41,7 @@ public class WrongLogin extends JPanel implements ActionListener {
         JPanel p1 = new JPanel();
         p1.setLayout(null);
         p1.setOpaque(false);
-        TFPseudo = new JTextField("Id");
+        TFPseudo = new JTextField("");
         TFPseudo.setBackground(new Color(255, 255, 255));
         TFPseudo.setForeground(new Color(0, 0, 0));
         TFPseudo.setBounds(150, 50, 200, 30);
@@ -62,13 +62,16 @@ public class WrongLogin extends JPanel implements ActionListener {
 
     }
 
-    public void actionPerformed(ActionEvent e) {
+  public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Connect")) {
             id = TFPseudo.getText();
             try {
-                Personne personne = PersonneBdd.connectPersonne(Integer.parseInt(id));
+                Personne personne = null;
+                if (PersonneBean.getInstance().getPersonne() == null) {
+                    personne = PersonneBean.getInstance().getPersonneInfo(Integer.parseInt(id));
+                }
                 if (personne != null) {
-               //     PersonneBean.getInstance().setFils(personne);
+                    PersonneBean.getInstance().setPersonne(personne);
                     MyFrame.getInstance().getFrame().dispose();
                     MyFrame.getInstance().setFrame(new JFrame("TP4 Infos"));
                     MyFrame.getInstance().changeFrame(new InfoDisplay());
